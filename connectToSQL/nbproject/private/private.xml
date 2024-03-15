@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/project_Cafe_Management/connectToSQL/src/connecttosql/ConnectToSQL.java</file>
+            <file>file:/D:/project_Cafe_Management/connectToSQL/src/view/CardF.java</file>
+            <file>file:/D:/project_Cafe_Management/connectToSQL/src/view/AddProductF.java</file>
+            <file>file:/D:/project_Cafe_Management/connectToSQL/src/view/AllProductsF.java</file>
+            <file>file:/D:/project_Cafe_Management/connectToSQL/src/view/OrderF.java</file>
+            <file>file:/D:/project_Cafe_Management/connectToSQL/src/view/ManageProductF.java</file>
+            <file>file:/D:/project_Cafe_Management/connectToSQL/src/view/homeF.java</file>
         </group>
     </open-files>
 </project-private>
