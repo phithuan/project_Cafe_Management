@@ -46,17 +46,13 @@ public class ConnectToSQL {
         try (Connection con = DriverManager.getConnection(connectionUrl);
              Statement stmt = con.createStatement()) {
 
-            String SQL = "SELECT * FROM Nhanvien"; // Thử truy vấn bất kỳ
+            String SQL = "SELECT * FROM Account"; // Thử truy vấn bất kỳ
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
-                System.out.println("MaNV: " + rs.getString("Manv"));
-                System.out.println("Ho ten: " + rs.getString("Hoten"));
-                System.out.println("SDT: " + rs.getString("SDT"));
-                System.out.println("Gioi tinh: " + rs.getString("Gioitinh"));
-                System.out.println("Chuc vu: " + rs.getString("Chucvu"));
-                System.out.println("Phan quyen: " + rs.getInt("Phanquyen"));
-                System.out.println("Ngay vao lam: " + rs.getString("Ngayvaolam"));
+                System.out.println("Username: " + rs.getString("Username"));
+                System.out.println("Matkhau: " + rs.getString("Matkhau"));
+                System.out.println("Manv: " + rs.getString("Manv"));
                 System.out.println();
             }
         } catch (SQLException e) {

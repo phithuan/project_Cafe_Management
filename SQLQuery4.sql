@@ -69,7 +69,7 @@ GO
 -- Thêm nhân viên
 INSERT INTO Nhanvien (Manv, Hoten, SDT, Gioitinh, Chucvu, Phanquyen, Ngayvaolam)
 VALUES
-    ('NV001', 'Nguyen Van A', 123456789, 'Nam', 'Quan ly', 1, '2024-03-15 08:00:00'),
+    ('NV001', 'Nguyen Van A', 123456789, 'Nam', 'Quan ly', 2, '2024-03-15 08:00:00'),
     -- Thêm các nhân viên khác ở đây...
 
 -- Thêm khách hàng
