@@ -41,18 +41,20 @@ import java.sql.Statement;
 public class ConnectToSQL {
 
     public static void main(String[] args) {
-        String connectionUrl = "jdbc:sqlserver://PHI-THUAN\\SQLEXPRESS:1433;databaseName=QLQuancoffee;user=phithuan;password=thuan;encrypt=true;Trusted_Connection=true;trustServerCertificate=true";
+        String connectionUrl = "jdbc:sqlserver://PHI-THUAN\\SQLEXPRESS:1433;databaseName=cafe;user=phithuan;password=thuan;encrypt=true;Trusted_Connection=true;trustServerCertificate=true";
 
         try (Connection con = DriverManager.getConnection(connectionUrl);
              Statement stmt = con.createStatement()) {
 
-            String SQL = "SELECT * FROM Account"; // Thử truy vấn bất kỳ
+            String SQL = "SELECT * FROM ad"; // Thử truy vấn bất kỳ
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
-                System.out.println("Username: " + rs.getString("Username"));
-                System.out.println("Matkhau: " + rs.getString("Matkhau"));
-                System.out.println("Manv: " + rs.getString("Manv"));
+                System.out.println("id: " + rs.getString("id"));
+                System.out.println("username: " + rs.getString("username"));
+                System.out.println("password: " + rs.getString("password"));
+                System.out.println("s_ques: " + rs.getString("s_ques"));
+                System.out.println("ans: " + rs.getString("ans"));
                 System.out.println();
             }
         } catch (SQLException e) {
