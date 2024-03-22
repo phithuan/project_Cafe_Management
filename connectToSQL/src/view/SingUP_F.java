@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Admin;
 import model.AdminDao;
+
 
 /**
  *
@@ -19,12 +21,12 @@ public class SingUP_F extends javax.swing.JFrame {
     /**
      * Creates new form SingUP_F
      */
-    
+    AdminDao dao = new AdminDao();
     int xx, xy;
 
     public SingUP_F() throws SQLException {
         initComponents();
-        AdminDao dao = new AdminDao();
+        //AdminDao dao = new AdminDao();
         jTextField2.setText(String.valueOf(dao.getMaxRowAdminTable()));
     }
 
@@ -130,6 +132,11 @@ public class SingUP_F extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jButton3.setText("Back");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +151,11 @@ public class SingUP_F extends javax.swing.JFrame {
 
         jButton4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jButton4.setText("Save");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 36)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(153, 0, 0));
@@ -330,6 +342,48 @@ public class SingUP_F extends javax.swing.JFrame {
         // nút thoát
         setVisible(false);
     }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here: nút để lưu
+        if (isEmpty()){
+            String username = jTextField3.getText().trim();
+            if(! dao.isAdimNameExist(username)){
+                Admin admin = new Admin();
+                admin.setId(dao.getMaxRowAdminTable());
+                admin.setUsername(username);
+                admin.setPassword(String.valueOf(jPasswordField1.getPassword()));
+                admin.setsQues(jComboBox1.getSelectedItem().toString());
+                admin.setAns(jTextField6.getText().trim());
+                
+                if(dao.insert(admin)){
+                    try {
+                        JOptionPane.showMessageDialog(this, "Admin Successfully Created ! ");
+                        new LoginF().setVisible(true);
+                        setVisible(false);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(SingUP_F.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Failed ! ","waring",2);
+                }
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(this, "Username already exists.. ! ","waring",2);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            // TODO add your handling code here:
+            new LoginF().setVisible(true);
+            setVisible(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(SingUP_F.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public boolean isEmpty() {
         if (jTextField3.getText().isEmpty()) {

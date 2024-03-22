@@ -25,8 +25,8 @@ public class MyConnection {
     
     public static Connection getConnection() throws SQLException{
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con =  DriverManager.getConnection(url,username,pasworld);
+            Class.forName("com.mysql.cj.jdbc.Driver");//Sử dụng Class.forName("com.mysql.cj.jdbc.Driver") để tải lớp trình điều khiển JDBC cho MySQL.
+            con =  DriverManager.getConnection(url,username,pasworld);//Sau đó, sử dụng DriverManager.getConnection(url, username, pasworld) để thiết lập kết nối đến cơ sở dữ liệu.
         } catch (ClassNotFoundException ex) {
             //Logger.getLogger(MyConnection.class.getName()).log(Level.SEVERE,null,ex);
             JOptionPane.showInternalMessageDialog(null, ""+ex,"",JOptionPane.WARNING_MESSAGE);

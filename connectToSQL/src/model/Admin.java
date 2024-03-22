@@ -6,6 +6,7 @@ package model;
  */
 public class Admin {
     private  int id;
+    private String Username;
     private String password;
     private  String sQues;
     private String ans;
@@ -18,6 +19,14 @@ public class Admin {
         this.id = id;
     }
 
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String Username) {
+        this.Username = Username;
+    }
+    
     public String getPassword() {
         return password;
     }
@@ -40,6 +49,10 @@ public class Admin {
 
     public void setAns(String ans) {
         this.ans = ans;
+    }
+
+    public void getUsername(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     
