@@ -19,12 +19,11 @@ public class LoginF extends javax.swing.JFrame {
     /**
      * Creates new form LoginF
      */
-    
     AdminDao dao = new AdminDao();
-    
+
     int xx, xy;
 
-    public LoginF() throws SQLException{
+    public LoginF() throws SQLException {
         initComponents();
     }
 
@@ -249,22 +248,22 @@ public class LoginF extends javax.swing.JFrame {
         // TODO add your handling code here:
         /*homeF frame = new homeF();
             frame.setVisible(true);*/
-        if(isEmpty()){
+        if (isEmpty()) {
             String username = jTextField2.getText().trim();
             String password = String.valueOf(jPasswordField1.getPassword());
-            
-            if(dao.getMaxRowAdminTable() !=1){
-                if(dao.login(username, password)){
+
+            if (dao.getMaxRowAdminTable() != 1) {
+                if (dao.login(username, password)) {
                     JOptionPane.showConfirmDialog(this, "login Success");
                     new homeF().setVisible(true);
                     setVisible(false);
-                }else{
-                    JOptionPane.showConfirmDialog(this, "Incorrect usename or password","login Failed",2);
+                } else {
+                    JOptionPane.showConfirmDialog(this, "Incorrect usename or password", "login Failed", 2);
 
                 }
-            }else{
+            } else {
                 try {
-                    JOptionPane.showConfirmDialog(this, "No admin in the admin table ! \nyou nees to sign up first","login Failed",2);
+                    JOptionPane.showConfirmDialog(this, "No admin in the admin table ! \nyou nees to sign up first", "login Failed", 2);
                     new SingUP_F().setVisible(true);
                     setVisible(false);
                 } catch (SQLException ex) {
@@ -308,7 +307,6 @@ public class LoginF extends javax.swing.JFrame {
         }*/
     }//GEN-LAST:event_formWindowOpened
 
-    
     public boolean isEmpty() {
         if (jTextField2.getText().isEmpty()) {
             JOptionPane.showConfirmDialog(this, "usename is required", "waring", 2);
@@ -322,7 +320,7 @@ public class LoginF extends javax.swing.JFrame {
         return true;
 
     }
-    
+
     /**
      * @param args the command line arguments
      */
