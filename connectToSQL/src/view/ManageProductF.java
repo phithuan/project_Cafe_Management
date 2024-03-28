@@ -4,6 +4,21 @@
  */
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import model.Dao;
+import model.Product;
+
 /**
  *
  * @author Admin
@@ -13,8 +28,14 @@ public class ManageProductF extends javax.swing.JFrame {
     /**
      * Creates new form ManageProductF
      */
-    public ManageProductF() {
+    int xx, xy;
+    int rowIndex;
+    Dao dao = new Dao();
+    DefaultTableModel model;
+
+    public ManageProductF() throws SQLException {
         initComponents();
+        tableProcduct(); // Gọi phương thức tableProcduct() để hiển thị dữ liệu trên bảng
     }
 
     /**
@@ -39,8 +60,23 @@ public class ManageProductF extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(156, 112, 79));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 0, 0));
@@ -60,6 +96,11 @@ public class ManageProductF extends javax.swing.JFrame {
                 "ID", "Name", "Price", "image"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("Product Name: ");
@@ -68,6 +109,11 @@ public class ManageProductF extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jButton2.setText("Delete");
@@ -85,17 +131,23 @@ public class ManageProductF extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(99, 99, 99))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(99, 99, 99)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(77, 77, 77)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 172, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(169, 169, 169))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -139,6 +191,90 @@ public class ManageProductF extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jLabel5MouseClicked
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        for (double i = 0.1; i <= 1.0; i += 0.1) {
+            String s = "" + i;
+            float f = Float.parseFloat(s);
+            this.setOpacity(f);
+            try {
+                Thread.sleep(40);
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ManageProductF.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        // TODO add your handling code here:
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        model = (DefaultTableModel ) jTable1.getModel();//được sử dụng để lấy mô hình (model) của bảng (jTable1). Mô hình của bảng chứa dữ liệu hiển thị trên bảng và cung cấp các phương thức để thao tác với dữ liệu này
+        rowIndex = jTable1.getSelectedRow();//hương thức getSelectedRow() của đối tượng jTable1 trả về chỉ số của hàng đang được chọn trên bảng. Nếu không có hàng nào được chọn, phương thức này sẽ trả về -1..Giá trị chỉ số của hàng được chọn sau đó được gán cho biến rowIndex, để có thể sử dụng trong việc truy xuất dữ liệu từ mô hình của bảng (model) sau này.
+        
+        // Lấy dữ liệu từ hàng được chọn và hiển thị trên các ô văn bản
+        jTextField1.setText(model.getValueAt(rowIndex, 1).toString());
+        jTextField2.setText(model.getValueAt(rowIndex, 2).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(jTextField1.getText().isEmpty() && jTextField2.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please select a product","warning",2);
+        }else{
+            Product product = new Product();
+            product.setId(Integer.parseInt(model.getValueAt(rowIndex, 0).toString()));
+            product.setName(jTextField1.getText().trim());
+            product.setPrice(Double.parseDouble(jTextField2.getText().trim()));
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void clear() {
+        jTextField1.setText(null);
+        jTextField2.setText(null);
+    }
+
+    private void tableProcduct() {
+        dao.getallProducts(jTable1);
+        model = (DefaultTableModel) jTable1.getModel();
+        jTable1.setRowHeight(100);
+        jTable1.setShowGrid(true);
+        jTable1.setGridColor(Color.black);
+        jTable1.setBackground(Color.white);
+        jTable1.setSelectionBackground(Color.gray);
+        jTable1.setModel(model);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.getColumnModel().getColumn(3).setCellRenderer(new ManageProductF.ImageRenderdr());
+    }
+
+    private class ImageRenderdr extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+            JLabel jL = new JLabel();
+            byte[] bytes = (byte[]) value;
+            ImageIcon imageicon = new ImageIcon(new ImageIcon(bytes).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+            jL.setIcon(imageicon);
+
+            return jL;
+
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -156,20 +292,25 @@ public class ManageProductF extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManageProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManageProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManageProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManageProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {//java.awt.EventQueue.invokeLater(new Runnable() {...} được sử dụng để đảm bảo rằng mã để tạo và hiển thị giao diện người dùng được thực thi trên luồng sự kiện của Java Swing, giúp tránh xung đột và đảm bảo tính nhất quán của giao diện người dùng.
             public void run() {
-                new ManageProductF().setVisible(true);
+                try {
+                    new ManageProductF().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManageProductF.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

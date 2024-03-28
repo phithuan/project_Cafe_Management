@@ -4,6 +4,19 @@
  */
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import model.Dao;
+
 /**
  *
  * @author Admin
@@ -13,8 +26,26 @@ public class AllProductsF extends javax.swing.JFrame {
     /**
      * Creates new form AllProductsF
      */
-    public AllProductsF() {
+    int xx, xy;
+    Dao dao = new Dao();
+    DefaultTableModel model;
+
+    public AllProductsF() throws SQLException {
         initComponents();
+        tableProcduct(); // Gọi phương thức tableProcduct() để hiển thị dữ liệu trên bảng
+    }
+
+    private void tableProcduct() {
+        dao.getallProducts(jTable1);
+        model = (DefaultTableModel) jTable1.getModel();
+        jTable1.setRowHeight(100);
+        jTable1.setShowGrid(true);
+        jTable1.setGridColor(Color.black);
+        jTable1.setBackground(Color.white);
+        jTable1.setSelectionBackground(Color.gray);
+        jTable1.setModel(model);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.getColumnModel().getColumn(3).setCellRenderer(new AllProductsF.ImageRenderdr());
     }
 
     /**
@@ -33,8 +64,23 @@ public class AllProductsF extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(156, 112, 79));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 0, 0));
@@ -98,6 +144,50 @@ public class AllProductsF extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel5MouseClicked
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        for (double i = 0.1; i <= 1.0; i += 0.1) {
+            String s = "" + i;
+            float f = Float.parseFloat(s);
+            this.setOpacity(f);
+            try {
+                Thread.sleep(40);
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AllProductsF.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        // TODO add your handling code here:
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
+    private class ImageRenderdr extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+            JLabel jL = new JLabel();
+            byte[] bytes = (byte[]) value;
+            ImageIcon imageicon = new ImageIcon(new ImageIcon(bytes).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+            jL.setIcon(imageicon);
+
+            return jL;
+
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -115,20 +205,25 @@ public class AllProductsF extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AllProductsF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AllProductsF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AllProductsF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AllProductsF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddProductF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {//java.awt.EventQueue.invokeLater(new Runnable() {...} được sử dụng để đảm bảo rằng mã để tạo và hiển thị giao diện người dùng được thực thi trên luồng sự kiện của Java Swing, giúp tránh xung đột và đảm bảo tính nhất quán của giao diện người dùng.
             public void run() {
-                new AllProductsF().setVisible(true);
+                try {
+                    new AllProductsF().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AllProductsF.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
